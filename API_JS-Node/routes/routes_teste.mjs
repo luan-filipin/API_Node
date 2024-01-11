@@ -93,13 +93,17 @@ router.post('/users', async (req, res) => {
 });
 
 
-// Criação de acesso.
+// Criação de acesso para gerar TOKEN
 router.post('/acesso', async (req, res) => {
     try {
-        const acessoData = req.body;
-        const newAcess = await acesso.create(acessoData);
+        const { usuario, senha } = req.body;
+        const newAcess = await acesso.create({usuario, senha});
         return res.json(newAcess);
     } catch (error) {
+        // Código 11000 indica erro de duplicidade no MongoDB
+        if (error.code === 11000 && error.keyPattern && error.keyPattern.usuario) {
+            return res.status(400).json({ error: "Esse nome de usuario ja existe. Escolha outro." });
+        }
         console.error(error);
         return res.status(500).json({ error: "Erro ao criar acesso." });
     }
@@ -107,7 +111,7 @@ router.post('/acesso', async (req, res) => {
 
 
 
-// Criação do Token.
+// Geração de TOKEN.
 router.post('/login', async (req, res) => {
     const usuario = req.body;
 

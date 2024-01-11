@@ -1,4 +1,6 @@
 import mongoose from "mongoose"
+import bcrypt from "bcrypt"
+
 
 // Cria um schema para a criação de um usuario.
 const userSchemaAcesso = new mongoose.Schema({
@@ -6,6 +8,7 @@ const userSchemaAcesso = new mongoose.Schema({
     usuario: {
         // Depois configuramos a coluna com type, require..
         type: String,
+        unique: true, // Não permite a criação de usuarios existe ja no banco.
         require: true, // Campo obrigatorio.
     },
     senha: {
@@ -18,6 +21,22 @@ const userSchemaAcesso = new mongoose.Schema({
     }
 })
 
+
+
+// Antes de salvar a senha no banco ele criptografa a senha.
+userSchemaAcesso.pre("save", async function (next) {
+    if (!this.isModified("senha")) {
+        return next();
+    }
+
+    try {
+        const hashedSenha = await bcrypt.hash(this.senha, 10);
+        this.senha = hashedSenha;
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
 
 // Permite que o schema seja utilizado em outro arquivo.
 export default mongoose.model('acesso', userSchemaAcesso)
