@@ -2,12 +2,11 @@ import mongoose from "mongoose"
 
 // Cria um schema para a criação de um usuario.
 const userSchema = new mongoose.Schema({
-    // Primeiro informamos o nome da coluna.
     codigo: {
-        // Depois configuramos a coluna com type, require..
+        
         type: Number,
         unique: true,// Impede a criação do usuario com um codigo ja existente no banco.
-        require: true, // Campo obrigatorio.
+        require: true,
     },
     name: {
         type: String,
