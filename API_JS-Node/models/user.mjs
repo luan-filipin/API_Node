@@ -2,8 +2,7 @@ import mongoose from "mongoose"
 
 // Cria um schema para a criação de um usuario.
 const userSchema = new mongoose.Schema({
-    codigo: {
-        
+    codigo: {  
         type: Number,
         unique: true,// Impede a criação do usuario com um codigo ja existente no banco.
         require: true,
@@ -22,5 +21,4 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// Permite que o schema seja utilizado em outro arquivo.
 export default mongoose.model('user', userSchema)

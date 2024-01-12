@@ -28,7 +28,6 @@ function gerarToken(dadosUsuario) {
 
 
 const verifyToken = (req, res, next) => {
-    // Pega o token passado no Headers em "Authorization".
     const tokenHeader = req.headers["authorization"];
     // Aqui estamos verificando se existe o token e separando o TOKEN da palavra Bearer pois o JWT espera apenas o TOKEN.
     const token = tokenHeader && tokenHeader.split(" ")[1];
