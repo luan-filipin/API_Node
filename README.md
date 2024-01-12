@@ -11,5 +11,5 @@ O projeto oferece operações CRUD completas (GET, PUT, PATCH, POST, DELETE).
 
 
 - Node.js: v20.10.0
-- MongoDB: [Download](https://www.mongodb.com/try/download/community)
+- MongoDB: Cloud
 
